@@ -1,0 +1,44 @@
+*{
+    box-sizing: border-box;
+}
+#title{
+	font-family: 'Dancing Script', cursive;
+	font-size: 50px;
+	margin-left: 2em;
+	
+}
+#logo{
+	height: 4em;
+	width: 5.5em;
+	position: absolute;
+}
+header{
+	display: inline;
+	position: relative;
+}
+#left-side{
+	width: 22%;
+	float: left;
+	border: 1px solid black;
+}
+#right-side{
+	float: right;
+	width: 77%;
+	margin-left: 1em;
+}
+.order{
+	height: 275px;
+	width: 400px;
+	
+	
+}
+main{
+	margin-top: 3em;
+	
+}
+.paragraph{
+	margin-top: 50px;
+	display: block;
+	
+
+}
