@@ -3,13 +3,17 @@
 let first = document.getElementById('first')
 let second = document.getElementById('second')
 let third = document.getElementById('third')
+
 let button = document.getElementById('button')
+
 
 let firstIndex;
 let secondIndex;
 let thirdIndex;
 
+
 let rounds = 25;
+
 let countclicks = 0;
 Bussmall.all = [];
 
@@ -54,6 +58,7 @@ function displayThreeImgs(){
     thirdIndex = getRandomIndex();
     
 
+
     while(secondIndex === firstIndex || secondIndex === thirdIndex || thirdIndex === firstIndex || thirdIndex === secondIndex){
     secondIndex = getRandomIndex();
     thirdIndex = getRandomIndex();}
@@ -65,6 +70,7 @@ function displayThreeImgs(){
     Bussmall.all[secondIndex].display++
     third.src = Bussmall.all[thirdIndex].source;
     Bussmall.all[thirdIndex].display++
+
 }
 displayThreeImgs();
 
@@ -85,6 +91,7 @@ function voteAndDisplay(event){
             else if (event.target.id === 'third') {
                 console.log(Bussmall.all[thirdIndex].vote++);
             }
+
             displayThreeImgs();
            
     console.log(event);
@@ -108,5 +115,4 @@ function getList(event){
         liEl.textContent = `${Bussmall.all[i].name} has ${Bussmall.all[i].vote} votes and displayed ${Bussmall.all[i].display} times.`
 
     }
-
 }
