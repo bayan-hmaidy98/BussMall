@@ -3,13 +3,13 @@
 let first = document.getElementById('first')
 let second = document.getElementById('second')
 let third = document.getElementById('third')
-let btn = document.getElementById('button')
+let button = document.getElementById('button')
 
 let firstIndex;
 let secondIndex;
 let thirdIndex;
 
-let rounds = 5;
+let rounds = 25;
 let countclicks = 0;
 Bussmall.all = [];
 
@@ -54,14 +54,17 @@ function displayThreeImgs(){
     thirdIndex = getRandomIndex();
     
 
-    while(secondIndex === firstIndex || secondIndex === thirdIndex){
-    secondIndex = getRandomIndex();}
-    while(thirdIndex === firstIndex || thirdIndex === secondIndex){
-        thirdIndex = getRandomIndex();
-    }
+    while(secondIndex === firstIndex || secondIndex === thirdIndex || thirdIndex === firstIndex || thirdIndex === secondIndex){
+    secondIndex = getRandomIndex();
+    thirdIndex = getRandomIndex();}
+
+  
     first.src = Bussmall.all[firstIndex].source;
+    Bussmall.all[firstIndex].display++
     second.src = Bussmall.all[secondIndex].source;
+    Bussmall.all[secondIndex].display++
     third.src = Bussmall.all[thirdIndex].source;
+    Bussmall.all[thirdIndex].display++
 }
 displayThreeImgs();
 
@@ -82,39 +85,28 @@ function voteAndDisplay(event){
             else if (event.target.id === 'third') {
                 console.log(Bussmall.all[thirdIndex].vote++);
             }
-
-           else {
-        first.removeEventListener('click', voteAndDisplay)
-        second.removeEventListener('click', voteAndDisplay)
-        third.removeEventListener('click', voteAndDisplay)
-    }
+            displayThreeImgs();
+           
     console.log(event);
 }
-}
-function imageDisplay(){
-    for (let i = 0; i <= Bussmall.all.length; i++)
-    {
-        if (first.src === Bussmall.all[i].source){
-            console.log(Bussmall.all[i].display++);
-        }
-        else if (second.src === Bussmall.all[i].source){
-            console.log(Bussmall.all[i].display++);
-    }
-        else if (third.src === Bussmall.all[i].source){
-            console.log(Bussmall.all[i].display++);
-        }
+else {
+    first.removeEventListener('click', voteAndDisplay)
+    second.removeEventListener('click', voteAndDisplay)
+    third.removeEventListener('click', voteAndDisplay)
+    
 }
 }
+button.addEventListener('click', getList)
 
-imageDisplay();
-btn.addEventListener('click', getList);
 
-function getList(){
+function getList(event){
+   button.removeEventListener('click', getList)
     let ul = document.getElementById('unOrLi')
-    for (let i = 0; i <= Bussmall.all.length; i++){
+    for (let i = 0; i <= Bussmall.all.length-1; i++){
         let liEl = document.createElement('li');
         ul.appendChild(liEl);
-        liEl.textContent = `${Bussmall.all[i].name} has ${Bussmall.all[i].vote} and ${Bussmall.all[i].display}`
+        liEl.textContent = `${Bussmall.all[i].name} has ${Bussmall.all[i].vote} votes and displayed ${Bussmall.all[i].display} times.`
 
     }
+
 }
