@@ -6,18 +6,18 @@ let third = document.getElementById('third')
 
 let button = document.getElementById('button')
 
-
+let checkArr = [-1, -1, -1];
 let firstIndex;
 let secondIndex;
 let thirdIndex;
 
 
 let rounds = 25;
-
-
+let arrOfVotes = [];
+let arrOfDisplay = [];
+let arrOfNames = [];
 let countclicks = 0;
 Bussmall.all = [];
-
 
 function Bussmall (name, source){
     this.name = name;
@@ -25,7 +25,7 @@ function Bussmall (name, source){
     this.vote = 0;
     this.display = 0;
     Bussmall.all.push(this)
-    
+    arrOfNames.push(this.name)
 
 }
 
@@ -63,12 +63,13 @@ function displayThreeImgs(){
     
 
 
-    while(secondIndex === firstIndex || secondIndex === thirdIndex || thirdIndex === firstIndex) {
+    while(secondIndex === firstIndex || secondIndex === thirdIndex || thirdIndex === firstIndex || checkArr.includes(firstIndex) || checkArr.includes(secondIndex) || checkArr.includes(thirdIndex)) {
     firstIndex = getRandomIndex();
     secondIndex = getRandomIndex();
     thirdIndex = getRandomIndex();}
+    checkArr = [];
+    checkArr.push(firstIndex, secondIndex, thirdIndex)
     
-
   
     first.src = Bussmall.all[firstIndex].source;
     Bussmall.all[firstIndex].display++
@@ -120,9 +121,69 @@ function getList(event){
         let liEl = document.createElement('li');
         ul.appendChild(liEl);
         liEl.textContent = `${Bussmall.all[i].name} has ${Bussmall.all[i].vote} votes and displayed ${Bussmall.all[i].display} times.`
-    
-
+        arrOfVotes.push(Bussmall.all[i].vote);
+        arrOfDisplay.push(Bussmall.all[i].display)
     }
-    
+    getChart();
 }
 
+function getChart(){
+    var ctx = document.getElementById('myChart').getContext('2d');
+    var myChart = new Chart(ctx, {
+        type: 'bar',
+        data: {
+            labels: arrOfNames,
+            datasets: [{
+                label: '# of Votes',
+                data: arrOfVotes,
+                backgroundColor: [
+                    'rgba(255, 99, 132, 0.2)',
+                    'rgba(54, 162, 235, 0.2)',
+                    'rgba(255, 206, 86, 0.2)',
+                    'rgba(75, 192, 192, 0.2)',
+                    'rgba(153, 102, 255, 0.2)',
+                    'rgba(255, 159, 64, 0.2)'
+                ],
+                borderColor: [
+                    'rgba(255, 99, 132, 1)',
+                    'rgba(54, 162, 235, 1)',
+                    'rgba(255, 206, 86, 1)',
+                    'rgba(75, 192, 192, 1)',
+                    'rgba(153, 102, 255, 1)',
+                    'rgba(255, 159, 64, 1)'
+                ],
+                borderWidth: 1
+            }, {
+                label: '# of shown',
+                data: arrOfDisplay,
+                backgroundColor: [
+                    'rgba(255, 99, 132, 0.2)',
+                    'rgba(54, 162, 235, 0.2)',
+                    'rgba(255, 206, 86, 0.2)',
+                    'rgba(75, 192, 192, 0.2)',
+                    'rgba(153, 102, 255, 0.2)',
+                    'rgba(255, 159, 64, 0.2)'
+                ],
+                borderColor: [
+                    'rgba(255, 99, 132, 1)',
+                    'rgba(54, 162, 235, 1)',
+                    'rgba(255, 206, 86, 1)',
+                    'rgba(75, 192, 192, 1)',
+                    'rgba(153, 102, 255, 1)',
+                    'rgba(255, 159, 64, 1)'
+                ],
+                borderWidth: 1
+            }]
+        },
+        options: {
+            scales: {
+                y: {
+                    beginAtZero: true
+                }
+                
+            },
+            indexAxis: 'y'},  
+        
+    })
+    }
+    
