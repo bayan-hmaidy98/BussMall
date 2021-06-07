@@ -14,8 +14,10 @@ let thirdIndex;
 
 let rounds = 25;
 
+
 let countclicks = 0;
 Bussmall.all = [];
+
 
 function Bussmall (name, source){
     this.name = name;
@@ -23,6 +25,8 @@ function Bussmall (name, source){
     this.vote = 0;
     this.display = 0;
     Bussmall.all.push(this)
+    
+
 }
 
 new Bussmall ('bag', 'img/bag.jpg')
@@ -59,9 +63,11 @@ function displayThreeImgs(){
     
 
 
-    while(secondIndex === firstIndex || secondIndex === thirdIndex || thirdIndex === firstIndex || thirdIndex === secondIndex){
+    while(secondIndex === firstIndex || secondIndex === thirdIndex || thirdIndex === firstIndex) {
+    firstIndex = getRandomIndex();
     secondIndex = getRandomIndex();
     thirdIndex = getRandomIndex();}
+    
 
   
     first.src = Bussmall.all[firstIndex].source;
@@ -83,18 +89,18 @@ function voteAndDisplay(event){
     if(rounds >= countclicks){
       
             if (event.target.id === 'first') {
-                console.log(Bussmall.all[firstIndex].vote++);
+                Bussmall.all[firstIndex].vote++;
             }
             else if (event.target.id === 'second') {
-                console.log(Bussmall.all[secondIndex].vote++);
+                Bussmall.all[secondIndex].vote++;
             }
             else if (event.target.id === 'third') {
-                console.log(Bussmall.all[thirdIndex].vote++);
+                Bussmall.all[thirdIndex].vote++;
             }
 
             displayThreeImgs();
            
-    console.log(event);
+    // console.log(event);
 }
 else {
     first.removeEventListener('click', voteAndDisplay)
@@ -103,7 +109,8 @@ else {
     
 }
 }
-button.addEventListener('click', getList)
+button.addEventListener('click', getList);
+
 
 
 function getList(event){
@@ -113,6 +120,9 @@ function getList(event){
         let liEl = document.createElement('li');
         ul.appendChild(liEl);
         liEl.textContent = `${Bussmall.all[i].name} has ${Bussmall.all[i].vote} votes and displayed ${Bussmall.all[i].display} times.`
+    
 
     }
+    
 }
+
