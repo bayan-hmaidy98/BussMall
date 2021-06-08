@@ -50,6 +50,7 @@ new Bussmall ('usb', 'img/usb.gif')
 new Bussmall ('water-can', 'img/water-can.jpg')
 new Bussmall ('wine-glass', 'img/wine-glass.jpg')
 
+
 console.log(Bussmall.all)
 function getRandomIndex(){
     let randomIndex = Math.floor(Math.random() * Bussmall.all.length);
@@ -77,7 +78,7 @@ function displayThreeImgs(){
     Bussmall.all[secondIndex].display++
     third.src = Bussmall.all[thirdIndex].source;
     Bussmall.all[thirdIndex].display++
-
+    
 }
 displayThreeImgs();
 
@@ -85,12 +86,14 @@ first.addEventListener('click', voteAndDisplay);
 second.addEventListener('click', voteAndDisplay);
 third.addEventListener('click', voteAndDisplay);
 
+console.log(Bussmall.all);
 function voteAndDisplay(event){
     countclicks++;
     if(rounds >= countclicks){
       
             if (event.target.id === 'first') {
                 Bussmall.all[firstIndex].vote++;
+                console.log(Bussmall.all);
             }
             else if (event.target.id === 'second') {
                 Bussmall.all[secondIndex].vote++;
@@ -98,21 +101,36 @@ function voteAndDisplay(event){
             else if (event.target.id === 'third') {
                 Bussmall.all[thirdIndex].vote++;
             }
-
+            
             displayThreeImgs();
-           
+            
+            
     // console.log(event);
 }
 else {
     first.removeEventListener('click', voteAndDisplay)
     second.removeEventListener('click', voteAndDisplay)
     third.removeEventListener('click', voteAndDisplay)
+    saveToLS();
     
 }
 }
 button.addEventListener('click', getList);
 
-
+function saveToLS(){
+    
+    let savedItem = JSON.stringify(Bussmall.all)
+    localStorage.setItem('votes',savedItem);
+}
+function gettingVoterIncreased(){
+    let data = localStorage.getItem('votes')
+    let conver = JSON.parse(data)
+    // Bussmall.all = conver;
+    if (data !==null){
+Bussmall.all=conver;
+    }
+    // getList();
+}
 
 function getList(event){
    button.removeEventListener('click', getList)
@@ -186,4 +204,4 @@ function getChart(){
         
     })
     }
-    
+    gettingVoterIncreased();
